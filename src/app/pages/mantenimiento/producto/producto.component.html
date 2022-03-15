@@ -1,0 +1,105 @@
+<h1>Administracion de Productos</h1>
+<br><hr>
+<button nz-button nzType="primary" (click)="open()">Nuevo Producto</button>
+<nz-table #basicTable [nzData]="producto">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Peso</th>
+        <th>Volumen</th>
+        <th>Color</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.id}}</td>
+        <td>{{data.nombre}}</td>
+        <td>{{data.marca}}</td>
+        <td>{{data.peso}}</td>
+        <td>{{data.volumen}}</td>
+        <td>{{data.color}}</td>
+        <td>
+          <a (click)="open(data)">Actualizar</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="delete(data.id)" >Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+
+
+
+
+
+  <nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="720"
+  [nzVisible]="visible"
+  nzTitle="Create"
+  [nzFooter]="footerTpl"
+  (nzOnClose)="close()"
+>
+  <form nz-form *nzDrawerContent (ngSubmit)="guardar()" [formGroup]="formProductos">
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Nombre</nz-form-label>
+          <nz-form-control >
+            <input formControlName="nombre" nz-input placeholder="Porfavor, ingresar nombre del producto" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Marca</nz-form-label>
+          <nz-form-control>
+            <input formControlName="marca" nz-input placeholder="Porfavor, ingresar la marca" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Peso</nz-form-label>
+          <nz-form-control>
+            <nz-input-number formControlName="peso" [nzStep]="1" nzPlaceHolder="Ingresar el peso en libras"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Volumen</nz-form-label>
+          <nz-form-control>
+            <nz-input-number formControlName="volumen" [nzStep]="1" nzPlaceHolder="Ingresar el volumen"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>Color</nz-form-label>
+          <nz-form-control>
+            <input formControlName="color" nz-input placeholder="Porfavor, ingrese color" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button (click)="close()" nz-button style="margin-right: 8px;" >Cancelar</button>
+      <button [disabled]="formProductos.invalid" nz-button nzType="primary" (click)="guardar()">Enviar</button>
+    </div>
+  </ng-template>
+</nz-drawer>
+
